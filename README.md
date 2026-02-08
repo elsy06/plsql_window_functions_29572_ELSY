@@ -72,7 +72,66 @@ Semester ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
  Business Value: Detect courses with declining quality or consistently poor
 
 ### Database Schema Design
-
+```sql
+CREATE TABLE Student ( 
+    StudentID VARCHAR(20) PRIMARY KEY, 
+    FirstName VARCHAR(50) NOT NULL, 
+    LastName VARCHAR(50) NOT NULL, 
+    Email VARCHAR(100) UNIQUE NOT NULL, 
+    DateOfBirth DATE, 
+    Gender VARCHAR(10), 
+    Department VARCHAR(50) NOT NULL, 
+    Program VARCHAR(100) NOT NULL, 
+    EntryYear INT NOT NULL, 
+    CurrentLevel VARCHAR(20), -- Freshman, Sophomore, Junior, Senior 
+    Status VARCHAR(20) DEFAULT 'Active' -- Active, Graduated, Suspended, Withdrawn 
+); 
+```
+```sql
+CREATE TABLE Instructor ( 
+    InstructorID VARCHAR(20) PRIMARY KEY, 
+    FirstName VARCHAR(50) NOT NULL, 
+    LastName VARCHAR(50) NOT NULL, 
+    Email VARCHAR(100) UNIQUE NOT NULL, 
+    Department VARCHAR(50) NOT NULL, 
+    Rank VARCHAR(30), -- Professor, Associate Professor, Assistant Professor, Lecturer 
+    HireDate DATE, 
+    OfficeLocation VARCHAR(50), 
+    PhoneNumber VARCHAR(15) 
+);
+```
+```sql
+CREATE TABLE Course ( 
+    CourseID VARCHAR(20) PRIMARY KEY, 
+    CourseName VARCHAR(150) NOT NULL, 
+    CourseCode VARCHAR(20) UNIQUE NOT NULL, 
+    Credits INT NOT NULL CHECK (Credits BETWEEN 1 AND 6), 
+    Department VARCHAR(50) NOT NULL, 
+    Level INT CHECK (Level BETWEEN 100 AND 400), -- 100=Freshman, 200=Sophomore, etc. 
+    Description TEXT, 
+    Prerequisites VARCHAR(200) 
+);
+```
+```sql
+CREATE TABLE Enrollment ( 
+    EnrollmentID INT PRIMARY KEY, 
+    StudentID VARCHAR(20) NOT NULL, 
+    CourseID VARCHAR(20) NOT NULL, 
+    InstructorID VARCHAR(20) NOT NULL, 
+    Semester VARCHAR(20) NOT NULL, -- Fall2024, Spring2024, Summer2024 
+    AcademicYear INT NOT NULL, 
+    Grade VARCHAR(5), -- A, A-, B+, B, B-, C+, C, D, F 
+    NumericGrade DECIMAL(4,2), -- 4.0 scale 
+    Status VARCHAR(20) DEFAULT 'Enrolled', -- Enrolled, Completed, Dropped, Withdrawn 
+    EnrollmentDate DATE, 
+    CompletionDate DATE, 
+    Attendance DECIMAL(5,2), -- Percentage 
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID), 
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID), 
+    FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID), 
+    UNIQUE (StudentID, CourseID, Semester) 
+); 
+```
 <img width="1080" height="770" alt="ERD DIAGRAM" src="https://github.com/user-attachments/assets/bbd9fba3-b146-4ae4-90d7-b2ae7bb1bfb6" />
 
 
