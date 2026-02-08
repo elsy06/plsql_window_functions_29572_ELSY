@@ -5,7 +5,7 @@
 **Student**: KAMANZI SANGWA Elsy |29572| Group A
 
 **Instructor**:Eric Maniraguha
-___
+
  
  
  # Business Context 
@@ -34,43 +34,43 @@ challenges:
 ● No systematic way to identify top-performing students for scholarships and awards
 
 ● Impossible to compare semester-to-semester performance improvements 
---
+
 ### success criteria
 
 **1. Top 10 Students Per Department Per Semester**
     
-○ Window Function: RANK() or DENSE_RANK() OVER (PARTITION BY 
+ Window Function: RANK() or DENSE_RANK() OVER (PARTITION BY 
 Department, Semester) 
 
-○ Metric: GPA ranking within department and semester
+ Metric: GPA ranking within department and semester
 
-○ Business Value: Identify candidates for Dean's List, scholarships, and academic awards
+ Business Value: Identify candidates for Dean's List, scholarships, and academic awards
 
 **2. Semester-to-Semester GPA Improvement Analysis**
 
-○ Window Function: LAG(GPA) and LEAD(GPA) 
+ Window Function: LAG(GPA) and LEAD(GPA) 
 
-○ Metric: Percentage change in GPA between consecutive semesters 
+ Metric: Percentage change in GPA between consecutive semesters 
 
-○ Business Value: Identify students needing intervention or showing improvement
+ Business Value: Identify students needing intervention or showing improvement
 
 **3. Student Performance Quartile Segmentation**
 
-○ Window Function: NTILE(4) OVER (ORDER BY Cumulative GPA) 
+ Window Function: NTILE(4) OVER (ORDER BY Cumulative GPA) 
 
-○ Metric: Four performance tiers (Excellent, Good, Average, At-Risk)
+ Metric: Four performance tiers (Excellent, Good, Average, At-Risk)
 
-○ Business Value: Allocate tutoring resources and academic support strategically
+ Business Value: Allocate tutoring resources and academic support strategically
 
 **4. 3-Semester Rolling Average Course Grade**
 
-○ Window Function: AVG(Grade) OVER(PARTITION BY CourseID ORDER BY 
+ Window Function: AVG(Grade) OVER(PARTITION BY CourseID ORDER BY 
 Semester ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) 
 
-○ Metric: Smoothed course performance trend
+ Metric: Smoothed course performance trend
 
-○ Business Value: Detect courses with declining quality or consistently poor
-___
+ Business Value: Detect courses with declining quality or consistently poor
+
 ### Database Schema Design
 
 <img width="1080" height="770" alt="ERD DIAGRAM" src="https://github.com/user-attachments/assets/bbd9fba3-b146-4ae4-90d7-b2ae7bb1bfb6" />
@@ -78,7 +78,7 @@ ___
 
 ### PART A: SQL JOINS
 
-___
+
 
 ### 1. INNER JOIN
 ```sql
@@ -128,7 +128,7 @@ requirements, and analyze course completion patterns. The INNER JOIN ensures onl
 records with existing students, courses, and instructors are displayed, eliminating any data 
 integrity issues.
 
-__
+
 ### 2. LEFT JOIN 
 ```sql
 SELECT  
@@ -166,7 +166,7 @@ ORDER BY s.EntryYear DESC;
 student retention. These students may have registered but never attended, indicating issues 
 with orientation, registration processes, or financial barriers. The Student Success Office can 
 proactively reach out to re-engage these students before they become dropouts. 
-__
+
 ### RIGHT JOIN
 ```sql
 SELECT  
@@ -190,7 +190,7 @@ ORDER BY c.Department, c.Level;
 outdated, poorly marketed, have scheduling conflicts, or lack relevance to current programs. 
 The curriculum committee should review these for potential cancellation or redesign. This helps 
 optimize faculty resources and course offerings. 
-__
+
 ### FULL OUTER JOIN
 ```sql
 SELECT  
@@ -216,7 +216,7 @@ ORDER BY s.StudentID NULLS LAST, c.CourseID NULLS LAST;
 enrollments and gaps. It reveals students without any courses (need intervention) and courses 
 without any students (need review). This holistic perspective helps the Registrar's Office 
 understand the complete enrollment landscape and identify improvement opportunities. 
-__
+
 ### SELF JOIN 
 ```sql
 SELECT  
@@ -249,7 +249,7 @@ department taking the same courses together. Academic advisors can use this to f
 groups, assign peer tutors, or create cohort-based learning communities. Comparing grades 
 between peers also helps identify students who might need additional support when their 
 classmates are performing better. 
-___
+
 ### PART B- Window Functions Implementation
 
 ### Ranking Functions (dense rank) 
@@ -276,7 +276,7 @@ ORDER BY DifficultyRank;
 difficult courses based on average grades without gaps in ranking. The Dean's Office uses 
 these rankings for academic honors, scholarship allocation, and curriculum difficulty 
 assessment. 
- __
+ 
  ### Aggregate Window Functions (SUM)
 ```sql
 SELECT  
@@ -303,7 +303,7 @@ ORDER BY e.StudentID, e.AcademicYear, e.Semester;
 advising. Students with insufficient credit accumulation need intervention. The 3-semester 
 moving average for courses smooths out grade fluctuations to reveal underlying teaching quality 
 trends. Declining averages signal curriculum issues or instructor challenges requiring attention. 
- __
+ 
  ### Navigation Functions (LAG/LEAD)
 ```sql
  WITH SemesterGPA AS ( 
@@ -345,7 +345,7 @@ ORDER BY StudentID, AcademicYear, Semester;
 improving or declining. Students with declining GPAs trigger academic alerts for intervention. 
 Consistently improving students may qualify for scholarships or advanced placement. This early 
 warning system prevents academic probation and supports student success initiatives. 
-__
+
 ### Distribution Functions(NTILE)
 ```sql
 WITH StudentPerformance AS ( 
@@ -410,7 +410,7 @@ quartile) receive intensive tutoring and academic counseling.
 - Average Credits Per Student: 10.5 credits completed
  
 **Department Performance:** - Computer Science: 3.68 GPA - Medicine: 4.00 GPA (limited data) - Business: 3.58 GPA - Engineering: 3.15 GPA (needs attention)
---- 
+
 #### **2. Diagnostic Analysis - Why Did It Happen?**
 
 **Root Causes of Performance Patterns:**
@@ -440,7 +440,7 @@ quartile) receive intensive tutoring and academic counseling.
    - Target: Increase average grade from 3.15 to 3.40
      
 
----
+
 ### **STEP 8: References & Integrity Statement**
 
 #### **References** 
@@ -457,17 +457,17 @@ Publishing. ISBN: 978-0135182796
 
 4. Date, C. J. (2019). *SQL and Relational Theory: How to Write Accurate SQL Code* (3rd ed.). 
 O'Reilly Media. ISBN: 978-1491941171
-___
+
 #### **Academic Integrity Statement** 
 
 "All sources were properly cited. Implementations and analysis represent original work. No AI-generated content was copied without attribution or adaptation".
-___
+
 ### Signature: 
 KAMANZI SANGWA ELSY
 
 ### Date:
 February 06, 2026
-___
+
 ### Contact
 
 ### Email
